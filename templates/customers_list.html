@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block customers_list_is_active %}active{% endblock %}
+
+{% block title %}Customers list:{% endblock %}
+
+{% block content %}
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Customer name</th>
+            <th>Address</th>
+            <th>birthdate</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in objects %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'accounts_by_customer_id' object.id %}">{{ object.name }}</a></td>
+                <td>{{ object.address }}</td>
+                <td>{{ object.birthdate }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if form %}
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-target="#collapseForm" aria-expanded="false">
+                <a href="#"><h3 class="panel-title">Add new customer</h3></a>
+            </div>
+            <div class="panel-body collapse" id="collapseForm">
+                <form method="POST" class="post-form">
+                    {% csrf_token %}
+                    {% bootstrap_form form layout='inline' %}
+                    <button type="submit" class="save btn btn-default">Save</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
