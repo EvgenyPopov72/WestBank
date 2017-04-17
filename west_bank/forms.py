@@ -32,6 +32,7 @@ class TransactionBetweenAccountsForm(forms.ModelForm):
     account_from = forms.ModelChoiceField(queryset=Account.objects, label='from account:', empty_label=None)
     account_to = forms.ModelChoiceField(queryset=Account.objects, label='to account:', empty_label=None)
     amount = forms.DecimalField(min_value=0)
+
     # description = forms.CharField(max_length=200)
 
     def clean(self):
@@ -75,3 +76,9 @@ class Deposit_WithdrawTransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = ('account', 'amount', 'description')
+
+
+class FilterTransactionForm(forms.Form):
+    filter_by_account = forms.ModelChoiceField(queryset=Account.objects, label='filter by account:', required=False)
+    filter_by_date_from = forms.DateTimeField(widget=CalendarWidget(), required=False)
+    filter_by_date_to = forms.DateField(widget=CalendarWidget(), required=False)
