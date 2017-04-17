@@ -35,12 +35,12 @@
     {% if form %}
     <div class="panel panel-default">
         <div class="panel-heading" data-toggle="collapse" data-target="#collapseForm" aria-expanded="false">
-            <a href="#"><h3 class="panel-title">Add new account</h3></a>
+            <a href="#"><h3 class="panel-title">Add new account to:</h3></a>
         </div>
-        <div class="panel-body collapse" id="collapseForm">
+        <div class="panel-body {% if not form.errors %}collapse{% endif %}" id="collapseForm">
             <form method="POST" class="post-form" action="{% url 'accounts_list' %}">
                 {% csrf_token %}
-                {% bootstrap_form form layout='inline' %}
+                {% bootstrap_form form layout='horizontal' %}
                 <button type="submit" class="save btn btn-default">Save</button>
             </form>
         </div>

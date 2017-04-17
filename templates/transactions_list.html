@@ -21,6 +21,7 @@
             <th>Account</th>
             <th>Amount</th>
             <th>Description</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
@@ -31,21 +32,37 @@
                 <td>{{ object.account_id }}</td>
                 <td>{{ object.amount }}</td>
                 <td>{{ object.description }}</td>
+                <td>{{ object.date }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    {% if form %}
+    {% if withdraw_form %}
         <div class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse" data-target="#collapseForm" aria-expanded="false">
-                <a href="#"><h3 class="panel-title">Add new transaction</h3></a>
+            <div class="panel-heading" data-toggle="collapse" data-target="#withdraw_form" aria-expanded="false">
+                <a href="#"><h3 class="panel-title">Deposit/withdraw</h3></a>
             </div>
-            <div class="panel-body collapse" id="collapseForm">
-                <form method="POST" class="post-form">
+            <div class="panel-body {% if not withdraw_form.errors %}collapse{% endif %}" id="withdraw_form">
+                <form method="POST" class="post-form" action="{% url 'deposit_withdraw_transaction' %}">
                     {% csrf_token %}
-                    {% bootstrap_form form layout='inline' %}
-                    <button type="submit" class="save btn btn-default">Save</button>
+                    {% bootstrap_form withdraw_form layout='horizontal' %}
+                    <button type="submit" class="save btn btn-default" name="withdraw_form">Save</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if acc_transf_form %}
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-target="#acc_transf_form" aria-expanded="false">
+                <a href="#"><h3 class="panel-title">Transfer between accounts</h3></a>
+            </div>
+            <div class="panel-body {% if not acc_transf_form.errors %}collapse{% endif %}" id="acc_transf_form">
+                <form method="POST" class="post-form" action="{% url 'transfer_between_account_transaction' %}">
+                    {% csrf_token %}
+                    {% bootstrap_form acc_transf_form layout='horizontal' %}
+                    <button type="submit" class="save btn btn-default" name="acc_transf_form">Save</button>
                 </form>
             </div>
         </div>
