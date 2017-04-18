@@ -65,7 +65,7 @@
             <div class="panel-body {% if not acc_transf_form.errors %}collapse{% endif %}" id="acc_transf_form">
                 <form method="POST" class="post-form" action="{% url 'transfer_between_account_transaction' %}">
                     {% csrf_token %}
-                    {% bootstrap_form acc_transf_form layout='horizontal' %}
+                    {% bootstrap_form acc_transf_form layout='inline' %}
                     <button type="submit" class="save btn btn-default" name="acc_transf_form">Save</button>
                 </form>
             </div>
