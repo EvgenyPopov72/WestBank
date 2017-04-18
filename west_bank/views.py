@@ -45,17 +45,23 @@ def transactions_list(request, account_id=None):
         withdraw_form = Deposit_WithdrawTransactionForm()
         acc_transf_form = TransactionBetweenAccountsForm()
         filter_by_account = request.GET.get('filter_by_account')
+        filter_by_date_from = request.GET.get('filter_by_date_from')
+        filter_by_date_to = request.GET.get('filter_by_date_to')
         filter_form = FilterTransactionForm(request.GET)
 
     if filter_by_account:
         account_id = filter_by_account
     if account_id:
-        objects = Transaction.objects.filter(account_id=account_id).order_by('date').all()
+        objects = Transaction.objects.filter(account_id=account_id).order_by('date')
         account = Account.objects.filter(id=account_id).all()
     else:
-        objects = Transaction.objects.order_by('date').all()
+        objects = Transaction.objects.order_by('date')
         account = Account.objects.all()
 
+    if filter_by_date_from:
+        objects = objects.filter(date__gte=filter_by_date_from)
+    if filter_by_date_to:
+        objects = objects.filter(date__lte=filter_by_date_to)
     return render(request, 'transactions_list.html', {'objects': objects, 'account': account,
                                                       'withdraw_form': withdraw_form,
                                                       'acc_transf_form': acc_transf_form,

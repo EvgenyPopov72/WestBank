@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Customer, Account, Transaction
-from .widgets import CalendarWidget
+from .widgets import CalendarWidget, CalendarWidget1
 
 
 class AddCustomerForm(forms.ModelForm):
@@ -9,7 +9,7 @@ class AddCustomerForm(forms.ModelForm):
         model = Customer
         fields = ('name', 'address', 'birthdate')
         widgets = {
-            'birthdate': CalendarWidget()
+            'birthdate': CalendarWidget1()
         }
 
 
@@ -80,5 +80,5 @@ class Deposit_WithdrawTransactionForm(forms.ModelForm):
 
 class FilterTransactionForm(forms.Form):
     filter_by_account = forms.ModelChoiceField(queryset=Account.objects, label='filter by account:', required=False)
-    filter_by_date_from = forms.DateTimeField(widget=CalendarWidget(), required=False)
-    filter_by_date_to = forms.DateField(widget=CalendarWidget(), required=False)
+    filter_by_date_from = forms.DateTimeField(widget=CalendarWidget, required=False)
+    filter_by_date_to = forms.DateField(widget=CalendarWidget, required=False)

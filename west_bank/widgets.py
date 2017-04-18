@@ -5,17 +5,31 @@ from WestLink_test import settings
 
 class CalendarWidget(forms.TextInput):
     class Media:
-        js = ('/admin/jsi18n/',
-              settings.STATIC_URL + 'admin/js/vendor/jquery/jquery.min.js',
-              settings.STATIC_URL + 'admin/js/jquery.init.js',
-              settings.STATIC_URL + 'admin/js/core.js',
-              settings.STATIC_URL + 'admin/js/calendar.js',
-              settings.STATIC_URL + 'admin/js/admin/DateTimeShortcuts.js')
+        js = (
+            settings.STATIC_URL + 'js/bootstrap-datetimepicker.js',
+            settings.STATIC_URL + 'js/dp-widget.js',
+        )
         css = {
             'all': (
-                settings.STATIC_URL + 'admin/css/forms.css',
-                settings.STATIC_URL + 'admin/css/widgets.css',)
+                settings.STATIC_URL + 'css/bootstrap-datetimepicker.css',
+            )
         }
 
     def __init__(self, attrs={}):
-        super(CalendarWidget, self).__init__(attrs={'class': 'vDateField', 'size': '10'})
+        super(CalendarWidget, self).__init__(attrs={'class': 'form_datetime', 'size': '16'})
+
+
+class CalendarWidget1(forms.TextInput):
+    class Media:
+        js = (
+            settings.STATIC_URL + 'js/bootstrap-datetimepicker.js',
+            settings.STATIC_URL + 'js/dp-widget.js',
+        )
+        css = {
+            'all': (
+                settings.STATIC_URL + 'css/bootstrap-datetimepicker.css',
+            )
+        }
+
+    def __init__(self, attrs={}):
+        super(CalendarWidget1, self).__init__(attrs={'class': 'form_date', 'size': '16'})
