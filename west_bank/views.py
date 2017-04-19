@@ -1,7 +1,7 @@
 from django.db.transaction import set_autocommit, commit
 from django.shortcuts import render, redirect
 
-from .forms import AddCustomerForm, AddAccountForm, AddTransactionForm, Deposit_WithdrawTransactionForm, \
+from .forms import AddCustomerForm, AddAccountForm, Deposit_WithdrawTransactionForm, \
     TransactionBetweenAccountsForm, FilterTransactionForm
 from .models import Customer, Account, Transaction
 
@@ -97,9 +97,10 @@ def transfer_between_account_transaction(request):
         objects = Transaction.objects.order_by('date').all()
         account = Account.objects.all()
         withdraw_form = Deposit_WithdrawTransactionForm()
+        filter_form = FilterTransactionForm(request.GET)
         return render(request, 'transactions_list.html',
                       {'objects': objects, 'account': account, 'withdraw_form': withdraw_form,
-                       'acc_transf_form': acc_transf_form})
+                       'acc_transf_form': acc_transf_form, 'filter_form': filter_form})
 
     else:
         return redirect('transactions_list')
@@ -123,9 +124,10 @@ def deposit_withdraw_transaction(request):
         objects = Transaction.objects.order_by('date').all()
         account = Account.objects.all()
         acc_transf_form = TransactionBetweenAccountsForm()
+        filter_form = FilterTransactionForm(request.GET)
         return render(request, 'transactions_list.html',
                       {'objects': objects, 'account': account, 'withdraw_form': withdraw_form,
-                       'acc_transf_form': acc_transf_form})
+                       'acc_transf_form': acc_transf_form, 'filter_form': filter_form})
 
     else:
         return redirect('transactions_list')
